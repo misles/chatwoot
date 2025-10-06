@@ -1,13 +1,13 @@
-name: Build and Push to Docker Hub
+name: Publish Chatwoot CE docker images
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [ main, develop ]
 
 jobs:
   build:
+    # Only run on YOUR fork, not the official repo
+    if: github.repository == 'abrarsaquib/chatwoot'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository   
@@ -35,5 +35,5 @@ jobs:
           provenance: false
           sbom: false
           tags: |
-            abrarsaquib/chat-custom:latest
-            abrarsaquib/chat-custom:${{ github.sha }}
+            abrarsaquib/chat-custom:ce-latest
+            abrarsaquib/chat-custom:ce-${{ github.sha }}
