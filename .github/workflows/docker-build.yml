@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository   
         uses: actions/checkout@v4   
 
+      - name: Set safe Git remote URL
+        run: |
+          git remote set-url origin https://github.com/${{ github.repository }}.git
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -28,6 +32,8 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
+          provenance: false
+          sbom: false
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/chat-custom:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/chat-custom:${{ github.sha }}
+            abrarsaquib/chat-custom:latest
+            abrarsaquib/chat-custom:${{ github.sha }}
