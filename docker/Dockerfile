@@ -87,7 +87,9 @@ RUN if [ "$RAILS_ENV" = "production" ]; then \
   fi
 
 # Generate .git_sha file with current commit hash
-RUN git rev-parse HEAD > /app/.git_sha
+# Generate .git_sha from build arg (safer for forks)
+ARG GIT_COMMIT=unknown
+RUN echo "$GIT_COMMIT" > /app/.git_sha
 
 # Remove unnecessary files
 RUN rm -rf /gems/ruby/3.4.0/cache/*.gem \
@@ -148,5 +150,10 @@ COPY --from=pre-builder /app /app
 COPY --from=pre-builder /app/.git_sha /app/.git_sha
 
 WORKDIR /app
+
+# Override auto-inferred image identity
+LABEL org.opencontainers.image.ref.name="abrarsaquib/chat-custom"
+LABEL org.opencontainers.image.source="https://github.com/abrarsaquib/chatwoot"
+LABEL org.opencontainers.image.version="${GIT_COMMIT:-latest}"
 
 EXPOSE 3000
