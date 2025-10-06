@@ -30,4 +30,3 @@ jobs:
           push: true
           tags: | # Corrected tag format
             ${{ secrets.DOCKERHUB_USERNAME }}/chat-custom:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/chat-custom:${{ github.sha }} # Optional: tag with commit SHA
