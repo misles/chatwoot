@@ -39,6 +39,7 @@ jobs:
           attestation: false
           tags: |
             abrarsaquib/chat-custom:latest
+            abrarsaquib/chat-custom:custom-branding
             abrarsaquib/chat-custom:${{ github.sha }}
           build-args: |
             GIT_COMMIT=${{ github.sha }}
